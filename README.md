@@ -1,84 +1,43 @@
-# Polynomial Secret Finder
+# Catalog Placements Assignment Solution
 
-This project solves the Catalog Placements Assignment for finding the secret constant term of a polynomial using Lagrange interpolation.
+## Problem Statement
+Find the constant term `c` of a polynomial using Lagrange interpolation from given encoded data points.
 
-## Problem Description
+## Solution Overview
 
-Given a set of polynomial roots in various bases, the task is to:
-1. Parse JSON input containing encoded polynomial roots
-2. Decode Y values from different bases to decimal
-3. Use Lagrange interpolation to find the secret (constant term c) of the polynomial
+### Algorithm: Lagrange Interpolation
+The solution implements Lagrange interpolation to find `f(0)`, which gives the constant term of the polynomial.
 
-## Solution Approach
+**Formula used:**
+```
+f(0) = Σ(yi * Π(-xj/(xi-xj))) for all i, where j ≠ i
+```
 
-The solution uses **Lagrange Interpolation** to reconstruct the polynomial and find f(0), which gives us the constant term.
+### Implementation Features
+1. **JSON Parsing**: Handles dynamic root keys in input files
+2. **Base Conversion**: Decodes values from bases 2-16 to decimal
+3. **Precision Handling**: Uses BigInt for arbitrary precision arithmetic
+4. **Efficient Computation**: Only uses first `k` points as specified
 
-### Key Components:
+## How to Run
 
-1. **JSON Parsing**: Reads test cases from JSON files with dynamic root keys
-2. **Base Decoding**: Converts values from bases 2-16 to decimal using BigInt for large numbers
-3. **Lagrange Interpolation**: Calculates f(0) using the formula:
-   ```
-   f(0) = Σ(yi * Π(-xj/(xi-xj))) for all i, where j ≠ i
-   ```
-
-## Implementation Details
-
-### Language:
-- **JavaScript (Node.js)** - `polynomial_secret.js`
-
-The implementation uses arbitrary precision arithmetic (BigInt) to handle large numbers accurately.
-
-## Usage
-
-### Running the Solution:
 ```bash
 node polynomial_secret.js <testcase.json>
 ```
 
-## Test Cases
+## Test Results
 
-### Test Case 1:
-- n = 4 (total roots provided)
-- k = 3 (minimum roots needed)
-- **Secret: 3**
+| Test Case | n (total roots) | k (roots used) | Secret Found |
+|-----------|----------------|----------------|---------------|
+| testcase1.json | 4 | 3 | **3** |
+| testcase2.json | 10 | 7 | **79836264058144** |
 
-### Test Case 2:
-- n = 10 (total roots provided)
-- k = 7 (minimum roots needed)
-- **Secret: 79836264058144**
+## Files Included
+- `polynomial_secret.js` - Main solution implementation
+- `testcase1.json` - First test case (provided)
+- `testcase2.json` - Second test case (provided)
+- `README.md` - This documentation
 
-## Example Output
-
-```
-Test Case: testcase1.json
-Number of roots (n): 4
-Minimum roots required (k): 3
-
-Decoded Points:
-  x = 1, y = 4
-  x = 2, y = 7
-  x = 3, y = 12
-  x = 6, y = 39
-
-Secret (constant term c): 3
-```
-
-## Algorithm Verification
-
-For Test Case 1, we can verify manually:
-- Points: (1,4), (2,7), (3,12)
-- Using these points, we can determine the polynomial is: f(x) = x² + 2x + 3
-- Therefore, f(0) = 3 (the constant term)
-
-## Dependencies
-
-### JavaScript:
-- Node.js (built-in fs module)
-- No external packages required
-
-## Notes
-
-- The solution handles large numbers using BigInt in JavaScript
-- Only the first k points are used for interpolation as specified
-- The solution correctly handles different number bases (2-16)
+## Requirements
+- Node.js (v12.0.0 or higher)
+- No external dependencies
