@@ -24,22 +24,16 @@ The solution uses **Lagrange Interpolation** to reconstruct the polynomial and f
 
 ## Implementation Details
 
-### Languages Provided:
+### Language:
 - **JavaScript (Node.js)** - `polynomial_secret.js`
-- **Python (Verification)** - `verify_results.py`
 
-Both implementations use arbitrary precision arithmetic to handle large numbers accurately.
+The implementation uses arbitrary precision arithmetic (BigInt) to handle large numbers accurately.
 
 ## Usage
 
-### JavaScript Version:
+### Running the Solution:
 ```bash
 node polynomial_secret.js <testcase.json>
-```
-
-### Python Verification:
-```bash
-python verify_results.py <testcase.json>
 ```
 
 ## Test Cases
@@ -83,13 +77,8 @@ For Test Case 1, we can verify manually:
 - Node.js (built-in fs module)
 - No external packages required
 
-### Python:
-- Standard library only (json, fractions, decimal)
-- No external packages required
-
 ## Notes
 
-- The solution handles large numbers using BigInt in JavaScript and fractions/decimal in Python
+- The solution handles large numbers using BigInt in JavaScript
 - Only the first k points are used for interpolation as specified
 - The solution correctly handles different number bases (2-16)
-- Python verification script provides step-by-step manual calculation for small test cases
