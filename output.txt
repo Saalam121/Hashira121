@@ -1,0 +1,46 @@
+Polynomial Secret Finder - Output Summary
+========================================
+
+Test Case 1 Results:
+-------------------
+Input: testcase1.json
+Number of roots (n): 4
+Minimum roots required (k): 3
+
+Decoded Points:
+  x = 1, y = 4 (from base 10)
+  x = 2, y = 7 (from base 2: 111)
+  x = 3, y = 12 (from base 10)
+  x = 6, y = 39 (from base 4: 213)
+
+Secret (constant term c): 3
+
+Test Case 2 Results:
+-------------------
+Input: testcase2.json
+Number of roots (n): 10
+Minimum roots required (k): 7
+
+Decoded Points:
+  x = 1, y = 995085094601491
+  x = 2, y = 21394886326566393
+  x = 3, y = 196563650089608567
+  x = 4, y = 1016509518118225951
+  x = 5, y = 3711974121218449920
+  x = 6, y = 10788619898233491456
+  x = 7, y = 26709394976508342272
+  x = 8, y = 58725075613853302784
+  x = 9, y = 117852986202006511971
+  x = 10, y = 220003896831595315200
+
+Secret (constant term c): 79836264058144
+
+Algorithm Used: Lagrange Interpolation
+======================================
+The solution uses Lagrange interpolation to find f(0), which gives us the constant term of the polynomial.
+
+Implementation Languages:
+- JavaScript (Node.js) - polynomial_secret.js
+- Go - polynomial_secret.go
+
+Both implementations handle arbitrary precision arithmetic for large numbers.
