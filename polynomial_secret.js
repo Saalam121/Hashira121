@@ -61,32 +61,58 @@ function extendedGCD(a, b) {
     return [g, x, y];
 }
 
+// GCD function for fraction reduction
+function gcd(a, b) {
+    a = a < 0n ? -a : a;
+    b = b < 0n ? -b : b;
+    while (b !== 0n) {
+        const temp = b;
+        b = a % b;
+        a = temp;
+    }
+    return a;
+}
+
 // Lagrange interpolation to find f(0) (the constant term)
 function lagrangeInterpolation(points, k) {
     // Use only the first k points
     const selectedPoints = points.slice(0, k);
-    let result = 0n;
+    
+    // We'll accumulate the result as a fraction (numerator/denominator)
+    let totalNumerator = 0n;
+    let totalDenominator = 1n;
     
     for (let i = 0; i < selectedPoints.length; i++) {
         // Calculate Li(0) = product of (-xj)/(xi - xj) for all j != i
-        let numerator = selectedPoints[i].y;
-        let denominator = 1n;
+        let termNumerator = selectedPoints[i].y;
+        let termDenominator = 1n;
         
         for (let j = 0; j < selectedPoints.length; j++) {
             if (i !== j) {
                 // numerator *= -xj
-                numerator *= -selectedPoints[j].x;
+                termNumerator *= -selectedPoints[j].x;
                 // denominator *= (xi - xj)
-                denominator *= (selectedPoints[i].x - selectedPoints[j].x);
+                termDenominator *= (selectedPoints[i].x - selectedPoints[j].x);
             }
         }
         
-        // Add the contribution to result
-        // We need to handle division carefully with BigInt
-        result += numerator / denominator;
+        // Add this term to our total: total = total + term
+        // (a/b) + (c/d) = (a*d + b*c) / (b*d)
+        totalNumerator = totalNumerator * termDenominator + totalDenominator * termNumerator;
+        totalDenominator = totalDenominator * termDenominator;
+        
+        // Reduce the fraction to prevent overflow
+        const g = gcd(totalNumerator, totalDenominator);
+        totalNumerator = totalNumerator / g;
+        totalDenominator = totalDenominator / g;
     }
     
-    return result;
+    // The result should be an integer for this problem
+    if (totalDenominator !== 1n && totalNumerator % totalDenominator !== 0n) {
+        throw new Error('Result is not an integer');
+    }
+    
+    return totalNumerator / totalDenominator;
 }
 
 // Main function
